@@ -45,14 +45,14 @@ Verify the service:
 
 | URL | Class | Methods |
 |-----|--------|---------|
-| /api/v1/members | MemberCollection | GET, POST, QUERY |
-| /api/v1/members/<id> | MemberItem | GET, PATCH, DELETE |
-| /api/v1/departments | DepartmentCollection | GET, POST |
-| /api/v1/departments/<id> | DepartmentItem | GET, PATCH, DELETE |
-| /api/v1/payroll | PayrollCollection | GET, POST |
-| /api/v1/payroll/<id> | PayrollItem | GET, PATCH, DELETE |
-| /api/v1/auth/login | LoginResource | POST |
-| /api/v1/auth/signup | SignupResource | POST |
+| /api/v2/members | MemberCollection | GET, POST, QUERY |
+| /api/v2/members/<id> | MemberItem | GET, PATCH, DELETE |
+| /api/v2/departments | DepartmentCollection | GET, POST |
+| /api/v2/departments/<id> | DepartmentItem | GET, PATCH, DELETE |
+| /api/v2/payroll | PayrollCollection | GET, POST |
+| /api/v2/payroll/<id> | PayrollItem | GET, PATCH, DELETE |
+| /api/v2/auth/login | LoginResource | POST |
+| /api/v2/auth/signup | SignupResource | POST |
 | /health | - | GET |
 
 ## Authentication
@@ -109,12 +109,12 @@ The first admin must be created with the seed script, because protected routes r
 
 | Operation | Method | Path | Roles |
 |-----------|--------|------|--------|
-| List | GET | /api/v1/members | Authenticated |
-| Search | QUERY | /api/v1/members | Authenticated |
-| Create | POST | /api/v1/members | admin, manager |
-| Retrieve | GET | /api/v1/members/<id> | Authenticated |
-| Update | PATCH | /api/v1/members/<id> | admin, manager |
-| Delete | DELETE | /api/v1/members/<id> | admin |
+| List | GET | /api/v2/members | Authenticated |
+| Search | QUERY | /api/v2/members | Authenticated |
+| Create | POST | /api/v2/members | admin, manager |
+| Retrieve | GET | /api/v2/members/<id> | Authenticated |
+| Update | PATCH | /api/v2/members/<id> | admin, manager |
+| Delete | DELETE | /api/v2/members/<id> | admin |
 
 Query parameters: limit (default 20), offset (default 0).
 
@@ -168,11 +168,11 @@ password is optional. Password hashes are never returned in API responses.
 
 | Operation | Method | Path | Roles |
 |-----------|--------|------|--------|
-| List | GET | /api/v1/departments | Authenticated |
-| Create | POST | /api/v1/departments | admin |
-| Retrieve | GET | /api/v1/departments/<id> | Authenticated |
-| Update | PATCH | /api/v1/departments/<id> | admin |
-| Delete | DELETE | /api/v1/departments/<id> | admin |
+| List | GET | /api/v2/departments | Authenticated |
+| Create | POST | /api/v2/departments | admin |
+| Retrieve | GET | /api/v2/departments/<id> | Authenticated |
+| Update | PATCH | /api/v2/departments/<id> | admin |
+| Delete | DELETE | /api/v2/departments/<id> | admin |
 
 Deletion is rejected while members remain assigned to the department.
 
@@ -188,31 +188,7 @@ Deletion is rejected while members remain assigned to the department.
 
 ## Payroll
 
-All payroll operations require the admin role.
 
-| Operation | Method | Path |
-|-----------|--------|------|
-| List | GET | /api/v1/payroll |
-| Create | POST | /api/v1/payroll |
-| Retrieve | GET | /api/v1/payroll/<id> |
-| Update | PATCH | /api/v1/payroll/<id> |
-| Delete | DELETE | /api/v1/payroll/<id> |
-
-### Create payroll record
-
-    POST /api/v1/payroll
-    Authorization: Bearer <token>
-    Content-Type: application/json
-
-    {
-      "member_id": "<member-id>",
-      "gross_pay": 5000.00,
-      "deductions": 500.00,
-      "pay_period": "2026-09",
-      "status": "pending"
-    }
-
-status must be pending or paid. Responses include computed net_pay (gross_pay - deductions). A member with payroll records cannot be deleted until those records are removed.
 
 ## Roles
 
@@ -269,17 +245,17 @@ Schema changes apply automatically on connect via migrations/, recorded in schem
     python seed_admin.py
 
     # Authenticate
-    curl -s -X POST http://127.0.0.1:5000/api/v1/auth/login \
+    curl -s -X POST http://127.0.0.1:5000/api/v2/auth/login \
       -H "Content-Type: application/json" \
       -d '{"email":"admin@example.com","password":"..."}'
 
     # Create a department
-    curl -s -X POST http://127.0.0.1:5000/api/v1/departments \
+    curl -s -X POST http://127.0.0.1:5000/api/v2/departments \
       -H "Authorization: Bearer <token>" \
       -H "Content-Type: application/json" \
       -d '{"name":"Engineering"}'
 
     # List members
-    curl -s http://127.0.0.1:5000/api/v1/members \
+    curl -s http://127.0.0.1:5000/api/v2/members \
       -H "Authorization: Bearer <token>"
       
