@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from typing import Optional
 import uuid
 
@@ -6,8 +6,7 @@ import uuid
 @dataclass
 class Department:
     name: str
-
-    # deactivation 
+    parent_id: Optional[str] = None
     is_active: bool = True
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
 

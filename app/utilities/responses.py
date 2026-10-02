@@ -11,7 +11,7 @@ def api_response(data = None, message = "OK", success = True, status_code = 200,
 
     return jsonify(payload), status_code
 
-def valiadtion_error(errors, message = "Validation failed"):
+def validation_error(errors, message = "Validation failed"):
     return api_response(
         data=errors,
         message = message,

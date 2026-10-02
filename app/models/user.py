@@ -1,28 +1,30 @@
-from dataclasses import dataclass, field, asdict
-from typing import Optional
+from dataclasses import asdict, dataclass, field
+from typing import ClassVar, FrozenSet, Optional
 import uuid
 
 
 @dataclass
 class Member:
+    VALID_ROLES: ClassVar[FrozenSet[str]] = frozenset({"admin", "manager", "employee"})
+
     first_name: str
     last_name: str
     email: str
-    username: Optional[str] = None
-
-
     employee_id: Optional[str] = None
     dept_id: Optional[str] = None
     role: str = "employee"
-
-    # deactivation 
     is_active: bool = True
+    password_hash: Optional[str] = None
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
 
     def __post_init__(self):
-        if self.role not in ("admin", "manager", "employee"):
-            raise ValueError("role must be admin, manager, or employee")
+        if self.role not in self.VALID_ROLES:
+            raise ValueError(f"role must be one of {sorted(self.VALID_ROLES)}")
 
     def to_dict(self) -> dict:
-        d = asdict(self)
+        return asdict(self)
+
+    def to_public_dict(self) -> dict:
+        d = self.to_dict()
+        d.pop("password_hash", None)
         return d

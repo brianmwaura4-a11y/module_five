@@ -17,7 +17,7 @@ def create_member_blueprint(service):
     @members_bp.route("/", methods=["POST"])
     def create_user():
 
-        res = service.post_data(request.get_json() or {})
+        res = service.post_data(request.get_data() or {})
         return res, 201
 
 

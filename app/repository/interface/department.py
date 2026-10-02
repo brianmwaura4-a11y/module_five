@@ -1,21 +1,16 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
+from typing import List, Optional
 
-class DepartmentInterfaceRepo(ABC):
+from app.record import Record
+from app.repository.interface.base import CrudInterfaceRepo
 
-    # Create
+
+class DepartmentInterfaceRepo(CrudInterfaceRepo):
     @abstractmethod
-    def post_data():
-        pass
-
-    # Read
-    @abstractmethod
-    def get_by_name():
-        pass
+    def get_by_name(self, name: str) -> Optional[Record]: ...
 
     @abstractmethod
-    def get_by_id():
-        pass
+    def get_children(self, parent_id: str) -> List[Record]: ...
 
     @abstractmethod
-    def get_all():
-        pass
+    def get_roots(self) -> List[Record]: ...

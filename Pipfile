@@ -5,10 +5,13 @@ name = "pypi"
 
 [packages]
 flask = "*"
-flask-sqlalchemy = "*"
 python-dotenv = "*"
+flask-cors = "*"
+werkzeug = "*"
+itsdangerous = "*"
 
 [dev-packages]
+pytest = "*"
 
 [requires]
 python_version = "3.12"

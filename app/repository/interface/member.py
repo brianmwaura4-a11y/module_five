@@ -1,32 +1,16 @@
-# enforce the rule to abide by
+from abc import abstractmethod
+from typing import List, Optional
 
-from abc import ABC, abstractmethod
+from app.record import Record
+from app.repository.interface.base import CrudInterfaceRepo
 
-class MemberInterfaceRepo(ABC):
 
-    # Create
+class MemberInterfaceRepo(CrudInterfaceRepo):
     @abstractmethod
-    def post_data(self, data):
-        pass
-
-    # Read
-    @abstractmethod
-    def get_by_email(self, email):
-        pass
+    def get_by_email(self, email: str) -> Optional[Record]: ...
 
     @abstractmethod
-    def get_by_id(self, id):
-        pass
+    def search(self, filters: Record, limit: int = 20, offset: int = 0) -> List[Record]: ...
 
     @abstractmethod
-    def get_all(self):
-        pass
-
-    @abstractmethod
-    def update_member(self, member_id, data):
-        pass
-
-    @abstractmethod
-    def delete_member(self, member_id):
-        pass
-
+    def count_search(self, filters: Record) -> int: ...

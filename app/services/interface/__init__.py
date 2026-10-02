@@ -1,4 +1,7 @@
-from app.services.interface.department import DepartmentInterfaceService
-from app.services.interface.member import MemberInterfaceService
+from app.services.interface.base import (
+    ReadInterfaceService,
+    WriteInterfaceService,
+    CrudInterfaceService,
+)
 
-__all__ = ["DepartmentInterfaceService", "MemberInterfaceService"]
+__all__ = ["ReadInterfaceService", "WriteInterfaceService", "CrudInterfaceService"]
