@@ -151,6 +151,21 @@ def create_app(config_name: str | None = None) -> Flask:
     # and injects the correct Access-Control-Allow-* headers based on
     # the origins configured in CORS_ALLOWED_ORIGIN.
     CORS(app, origins=app.config["CORS_ALLOWED_ORIGIN"])
+    CORS(
+        app,
+        resources={
+            r"/api/*": {
+                "origins": app.config.get(
+                    "CORS_ALLOWED_ORIGINS",
+                    ["http://localhost:3000", "http://127.0.0.1:3000", "*"]
+                ),
+                "methods": ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+                "allow_headers": ["Content-Type", "Authorization"],
+                # Set to True only if you use cookies or JWT in headers + withCredentials
+                "supports_credentials": app.config.get("CORS_SUPPORTS_CREDENTIALS", False),
+            }
+        },
+    )
 
     # ------------------------------------------------------------------
     # 9. Health check endpoint

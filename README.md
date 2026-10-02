@@ -61,13 +61,13 @@ Protected endpoints require:
 
     Authorization: Bearer <token>
 
-Tokens are issued by login and signup. Public endpoints: /api/v1/auth/login, /api/v1/auth/signup, /health.
+Tokens are issued by login and signup. Public endpoints: /api/v2/auth/login, /api/v2/auth/signup, /health.
 
 ### Sign up
 
 Creates a member with role employee only. Elevated roles cannot be granted via self-service registration.
 
-    POST /api/v1/auth/signup
+    POST /api/v2/auth/signup
     Content-Type: application/json
 
     {
@@ -83,7 +83,7 @@ Response: 201 Created (token payload, same shape as login).
 
 ### Login
 
-    POST /api/v1/auth/login
+    POST /api/v2/auth/login
     Content-Type: application/json
 
     {
@@ -120,7 +120,7 @@ Query parameters: limit (default 20), offset (default 0).
 
 ### Create member
 
-    POST /api/v1/members
+    POST /api/v2/members
     Authorization: Bearer <token>
     Content-Type: application/json
 
@@ -136,7 +136,7 @@ Query parameters: limit (default 20), offset (default 0).
 
 ### Search members
 
-    QUERY /api/v1/members?limit=20&offset=0
+    QUERY /api/v2/members?limit=20&offset=0
     Authorization: Bearer <token>
     Content-Type: application/json
 
@@ -151,7 +151,7 @@ Allowed filters: dept_id, role, is_active, last_name_prefix.
 
 ### Update member
 
-    PATCH /api/v1/members/<id>
+    PATCH /api/v2/members/<id>
     Authorization: Bearer <token>
     Content-Type: application/json
 
@@ -178,7 +178,7 @@ Deletion is rejected while members remain assigned to the department.
 
 ### Create department
 
-    POST /api/v1/departments
+    POST /api/v2/departments
     Authorization: Bearer <token>
     Content-Type: application/json
 

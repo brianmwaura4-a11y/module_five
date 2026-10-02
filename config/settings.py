@@ -14,6 +14,13 @@ class BaseConfig:
     SEED_DATA: bool = False               # Whether to insert dummy data on startup
     DEFAULT_PAGE_SIZE: int = 20           # Pagination fallback
 
+    CORS_ALLOWED_ORIGINS: list = [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "*",
+    ]
+    CORS_SUPPORTS_CREDENTIALS: bool = False
+
 
 class DevelopmentConfig(BaseConfig):
     DEBUG: bool = True
@@ -36,6 +43,12 @@ class ProductionConfig(BaseConfig):
     SEED_DATA: bool = False
     # Force the operator to supply a real secret in production
     SECRET_KEY: str = os.environ.get("SECRET_KEY")  # type: ignore[assignment]
+
+    CORS_ALLOWED_ORIGINS = [
+        "https://your-production-domain.com",
+        # "https://admin.your-production-domain.com",
+    ]
+    CORS_SUPPORTS_CREDENTIALS = True  # if using cookies
 
 
 # Map string names to config classes so create_app() can pick one.
